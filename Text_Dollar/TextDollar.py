@@ -25,6 +25,8 @@ ones = ['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine']
 teens = ['Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen']
 tens = ['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety']
  
+ 
+ 
 def main(args):
 	filename=args[0] 
 	readfile=open(filename,'r')
@@ -36,6 +38,8 @@ def main(args):
 		myarray.append(DollarValue(amount))
  
 	for dollar in myarray:
+    
+ 
 		textOutput = [	dollar.printHundreds('Billions'),dollar.printTens('Billions'),dollar.printOnes('Billions'),\
 						dollar.printHundreds('Millions'),dollar.printTens('Millions'),dollar.printOnes('Millions'),\
 						dollar.printHundreds('Thousands'),dollar.printTens('Thousands'),dollar.printOnes('Thousands'),\
@@ -45,10 +49,7 @@ def main(args):
 		textOutput = [x for x in textOutput if x != None]
 		if textOutput != [] : print ''.join(textOutput)
  
-		    
- 
- 
- 
+
 class DollarValue:
 	def __init__(self,value):
 		self.value = int(value)
@@ -57,6 +58,7 @@ class DollarValue:
 		self.thousands = None
 		self.millions = None
 		self.billions = None
+ 
 		try:
 			self.hundreds = (str(self.value)[-3:]) if self.length >= 3 else (str(self.value)[-self.length:])
 			self.thousands = (str(self.value)[-6:-3]) if self.length >= 6 else (str(self.value)[-self.length:-3])
@@ -75,6 +77,7 @@ class DollarValue:
 				value = None if len(self.getBase(base)) == 0 else int(self.getBase(base)[0]) if len(self.getBase(base)) == 1 else int(self.getBase(base)[-1:]) if int(self.getBase(base)[-2]) != 1 else None
 			except:
 				pass
+ 
 			if value != None and base.lower() == 'hundreds':
 				returnValue = ones[value] + 'Dollars'
 				return 'OneDollars' if returnValue == 'OneDollars' and self.value < 10 else returnValue
@@ -84,11 +87,14 @@ class DollarValue:
  
 	def printTens(self, base):
 		value = None
+ 
 		if self.value != 0:
 			try:
 				value = None if len(self.getBase(base)) <= 1 else int(self.getBase(base)[-2:-1]) if int(self.getBase(base)[-2]) != 1 else int(self.getBase(base)[-2:])
+				#if base.lower() == 'hundreds': value = None if len(self.hundreds) <= 1 else int(self.hundreds[-2:-1]) if int(self.hundreds[-2]) != 1 else int(self.hundreds[-2:])
 			except:
 				pass
+ 
 		if value != None and value < 10:
 			return tens[value]
 		elif value != None and value >= 10 and self.value <= 1000:
@@ -100,13 +106,19 @@ class DollarValue:
  
 	def printHundreds(self,base):
 		value = None
+ 
 		if self.value != 0:
 			try:
 				value = None if len(self.getBase(base)) <= 2 else int(self.getBase(base)[-3])
+				#if base.lower() == 'hundreds': value = None if len(self.hundreds) <= 1 else int(self.hundreds[-2:-1]) if int(self.hundreds[-2]) != 1 else int(self.hundreds[-2:])
 			except:
 				pass
+ 
+ 
 		if value  and value < 10:
 			return ones[value] + 'Hundred'
+ 
+ 
  
 	def getBase(self,base):
 		if base.lower() == 'hundreds':
@@ -117,6 +129,8 @@ class DollarValue:
 			return self.millions
 		elif base.lower() == 'billions':
 			return self.billions
+ 
+ 
  
 ###########################
 # PROG DECLARE
